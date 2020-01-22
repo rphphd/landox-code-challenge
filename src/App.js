@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Col, Container, Jumbotron, Row } from 'react-bootstrap'
 import uuidv4 from 'uuid/v4'
 
@@ -8,7 +9,7 @@ import './App.css';
 import EditTractOwnership from './EditTractOwnership'
 import Icon from './Icon'
 
-const tractOwnerships = [{
+let tractOwnerships = [{
   id: uuidv4(),
   owner: "Luke Skywalker",
   interest: 0.5,
@@ -24,6 +25,17 @@ const tractOwnerships = [{
   }]
 }]
 
+const changedTract = newValue => {
+  console.log('changedTract', newValue)
+  tractOwnerships = newValue
+  console.log('changedTract this', changedTract)
+  let element = (
+    <EditTractOwnership value={tractOwnerships} onChange={changedTract}/>)
+  ReactDOM.render(
+    element,
+    document.getElementById('tract-page'));
+}
+
 function App() {
   return (
     <Container>
@@ -35,8 +47,8 @@ function App() {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <EditTractOwnership value={tractOwnerships} />
+        <Col id="tract-page">
+          <EditTractOwnership value={tractOwnerships} onChange={changedTract}/>
         </Col>
       </Row>
     </Container>
